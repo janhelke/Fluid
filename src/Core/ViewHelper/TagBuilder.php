@@ -7,6 +7,9 @@
 
 namespace TYPO3Fluid\Fluid\Core\ViewHelper;
 
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Tag builder. Can be easily accessed in AbstractTagBasedViewHelper
  *
@@ -263,7 +266,8 @@ class TagBuilder
         if ($this->hasContent() || $this->forceClosingTag) {
             $output .= '>' . $this->content . '</' . $this->tagName . '>';
         } else {
-            $output .= ' />';
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $output .= ($pageRenderer->getDocType()->isXmlCompliant() ? '/>' : '>');
         }
         return $output;
     }
