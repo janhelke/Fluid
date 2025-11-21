@@ -294,7 +294,8 @@ class TagBuilder
         if ($this->hasContent() || $this->forceClosingTag) {
             $output .= '>' . $this->content . '</' . $this->tagName . '>';
         } else {
-            $output .= ' />';
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $output .= ($pageRenderer->getDocType()->isXmlCompliant() ? '/>' : '>');
         }
         return $output;
     }
