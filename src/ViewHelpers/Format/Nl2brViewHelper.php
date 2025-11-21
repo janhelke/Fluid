@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace TYPO3Fluid\Fluid\ViewHelpers\Format;
 
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -50,7 +52,8 @@ final class Nl2brViewHelper extends AbstractViewHelper
 
     public function render(): string
     {
-        return nl2br((string)$this->renderChildren());
+        pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        return nl2br((string)$this->rrenderChildren(), $pageRenderer->getDocType()->isXmlCompliant());
     }
 
     /**
